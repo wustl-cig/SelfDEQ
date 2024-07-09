@@ -1,0 +1,96 @@
+{
+        "setting": {
+                "root_path": "./experiment/",
+                "save_folder": "",
+                "gpu_index": "0",
+
+                "mode": "train",
+                "method": "selfDEQ",
+                "dataset": "simulation"
+        },
+
+        "dataset": {
+
+                "simulation": {
+                        "ACS_percentage": 0.175,
+                        "is_fixed_ACS": false,
+                        "is_weight_compensate_incomplete": true,
+
+                        "is_supervised": false,
+                        "acceleration_factor": 8,
+                        "sigma": 0.01,
+                        "acquisition_times": 2,
+                        "is_complete": true,
+
+                        "root_path": "./dataset/"
+                }
+        },
+
+        "method": {
+
+                "network": "UNet",
+                "is_normalized": false,
+                "dimension": 2,
+
+                "architecture": {
+
+                        "UNet": {
+                                "f_root": 32,
+                                "conv_times": 2,
+                                "up_down_times": 3,
+                                "is_speNorm": true,
+                                "is_residual": false
+                        }
+
+                },
+
+                "loss_fn": {
+                        "rec_fn": "l2",
+
+                        "coff_k_space_target": 1.0,
+                        "coff_k_space_input": 0,
+
+                        "is_weighted": true
+                },
+
+                "ured": {
+                        "gamma_init": 0.5,
+
+                        "alpha": 0.5,
+                        "tau_init": 1,
+
+                        "forward_num_step": 100,
+                        "backward_num_step": 100,
+                        "tol": 1e-3,
+
+                        "pre_trained_model_path": null,
+
+                        "unfolding_method": "pnp_fixed",
+                        "unfolding_step": 10,
+
+                        "is_jacobian_free": true
+                }
+
+        },
+
+        "train": {
+                "batch_size": 8,
+
+                "num_workers": 4,
+                "verbose_batch": 1,
+                "train_epoch": 301,
+                "checkpoint_epoch": 10,
+                "tensorboard_batch": 10,
+                "inference_epoch": 10,
+                "gradient_clipping": -1,
+
+                "src_path": "",
+                "lr": 1e-4
+        },
+
+        "test": {
+                "checkpoint": "recon_model/model.pt"
+        }
+
+
+}
